@@ -1,9 +1,15 @@
 package com.global.FloodWatch.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "usuarios")
 public class Usuario {
@@ -34,8 +40,10 @@ public class Usuario {
 
     @PrePersist
     public void prePersist() {
-        id = UUID.randomUUID();
-        criadoEm = LocalDateTime.now();
+        if (this.id == null) { // Garante que o ID só seja gerado se não estiver definido (útil para updates)
+            this.id = UUID.randomUUID();
+        }
+        this.criadoEm = LocalDateTime.now();
     }
 
     public enum TipoUsuario {

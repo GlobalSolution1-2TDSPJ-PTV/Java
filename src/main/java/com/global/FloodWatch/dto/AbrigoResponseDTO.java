@@ -4,18 +4,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SensorResponseDTO {
+public class AbrigoResponseDTO {
     private UUID id;
-    private String localizacao;
+    private String nome;
+    private Integer capacidade;
+    private Integer ocupacaoAtual;
     private Double latitude;
     private Double longitude;
-    private String tipo;
-    private String ativo;
-    private LocalDateTime instaladoEm;
+    private String responsavel;
 }

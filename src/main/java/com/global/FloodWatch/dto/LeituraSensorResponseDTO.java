@@ -10,12 +10,10 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SensorResponseDTO {
+public class LeituraSensorResponseDTO {
     private UUID id;
-    private String localizacao;
-    private Double latitude;
-    private Double longitude;
-    private String tipo;
-    private String ativo;
-    private LocalDateTime instaladoEm;
+    private UUID sensorId;
+    private Double valor;
+    private String unidade;
+    private LocalDateTime lidoEm;
 }

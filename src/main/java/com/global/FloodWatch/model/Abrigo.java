@@ -1,8 +1,14 @@
 package com.global.FloodWatch.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import java.util.UUID;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "abrigos")
 public class Abrigo {
@@ -25,7 +31,11 @@ public class Abrigo {
 
     @PrePersist
     public void prePersist() {
-        id = UUID.randomUUID();
-        ocupacaoAtual = 0;
+        if (this.id == null) {
+            this.id = UUID.randomUUID();
+        }
+        if (this.ocupacaoAtual == null) {
+            this.ocupacaoAtual = 0;
+        }
     }
 }
