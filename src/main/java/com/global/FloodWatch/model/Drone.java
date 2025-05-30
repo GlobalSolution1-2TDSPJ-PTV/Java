@@ -1,8 +1,14 @@
 package com.global.FloodWatch.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import java.util.UUID;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "drones")
 public class Drone {
@@ -14,6 +20,7 @@ public class Drone {
     private String nome;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private StatusDrone status;
 
     @Column(name = "local_atual")
@@ -24,8 +31,12 @@ public class Drone {
 
     @PrePersist
     public void prePersist() {
-        id = UUID.randomUUID();
-        status = StatusDrone.ativo;
+        if (this.id == null) {
+            this.id = UUID.randomUUID();
+        }
+        if (this.status == null) {
+            this.status = StatusDrone.ativo;
+        }
     }
 
     public enum StatusDrone {

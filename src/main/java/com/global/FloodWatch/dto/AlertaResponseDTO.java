@@ -10,12 +10,12 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SensorResponseDTO {
+public class AlertaResponseDTO {
     private UUID id;
-    private String localizacao;
-    private Double latitude;
-    private Double longitude;
+    private UUID sensorId;
     private String tipo;
-    private String ativo;
-    private LocalDateTime instaladoEm;
+    private String mensagem;
+    private com.global.FloodWatch.model.Alerta.NivelAlerta nivel;
+    private LocalDateTime criadoEm;
+    private String resolvido;
 }
