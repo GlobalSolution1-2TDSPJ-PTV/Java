@@ -3,7 +3,6 @@ package com.global.FloodWatch.config;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
-import io.swagger.v3.oas.models.info.Contact;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,12 +16,7 @@ public class OpenApiConfig {
                         .title("FloodWatch API")
                         .version("v0.0.1")
                         .description("API para o sistema FloodWatch de prevenção e resposta a enchentes.")
-                        .termsOfService("http://swagger.io/terms/") // Opcional
-                        .license(new License().name("Apache 2.0").url("http://springdoc.org")) // Opcional
-                        .contact(new Contact()
-                                .email("contato@floodwatch.com")
-                                .name("Equipe FloodWatch")
-                                .url("http://www.floodwatch.com")) // Opcional
+                        .license(new License().name("Apache 2.0").url("http://springdoc.org"))
                 );
     }
 }

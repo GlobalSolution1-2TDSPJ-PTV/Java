@@ -1,6 +1,7 @@
 package com.global.FloodWatch.dto;
 
 import com.global.FloodWatch.model.Usuario;
+import io.swagger.v3.oas.annotations.media.Schema; // Importar
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -9,30 +10,40 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(description = "DTO para requisição de criação ou atualização de Usuário")
 public class UsuarioRequestDTO {
+
+    @Schema(description = "Nome completo do usuário.", example = "João da Silva", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank(message = "O nome não pode estar em branco")
     @Size(max = 100, message = "O nome deve ter no máximo 100 caracteres")
     private String nome;
 
+    @Schema(description = "Endereço de e-mail do usuário.", example = "joao.silva@example.com", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank(message = "O email não pode estar em branco")
     @Email(message = "Formato de email inválido")
     @Size(max = 100, message = "O email deve ter no máximo 100 caracteres")
     private String email;
 
+    @Schema(description = "Senha do usuário (mínimo 6 caracteres).", example = "senha123", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank(message = "A senha não pode estar em branco")
-    // Adicione validações de complexidade de senha se necessário (ex: @Pattern)
     @Size(min = 6, message = "A senha deve ter no mínimo 6 caracteres")
-    private String senha; // Senha em texto plano, o hash será feito no service
+    private String senha;
 
+    @Schema(description = "Tipo de usuário.", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "O tipo de usuário não pode ser nulo")
     private Usuario.TipoUsuario tipoUsuario;
 
+    @Schema(description = "Número de telefone do usuário.", example = "11987654321")
     @Size(max = 20, message = "O telefone deve ter no máximo 20 caracteres")
     private String telefone;
 
+    @Schema(description = "Latitude da localização do usuário.", example = "-23.550520")
     private Double latitude;
+
+    @Schema(description = "Longitude da localização do usuário.", example = "-46.633308")
     private Double longitude;
 }
