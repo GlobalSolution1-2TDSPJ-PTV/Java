@@ -38,7 +38,7 @@ public class UsuarioService {
         usuario.setTelefone(usuarioRequestDTO.getTelefone());
         usuario.setLatitude(usuarioRequestDTO.getLatitude());
         usuario.setLongitude(usuarioRequestDTO.getLongitude());
-        // O @PrePersist na entidade Usuario cuidará do ID e criadoEm
+
 
         Usuario novoUsuario = usuarioRepository.save(usuario);
         return mapToUsuarioResponseDTO(novoUsuario);
