@@ -45,6 +45,11 @@ public class UsuarioController {
     }
 
     @Operation(summary = "Lista todos os usuários")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lista de usuários retornada com sucesso",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = UsuarioResponseDTO.class)) }) // Correto, mas pode ser um array
+    })
     @GetMapping
     public ResponseEntity<List<UsuarioResponseDTO>> listarTodosUsuarios() {
         List<UsuarioResponseDTO> usuarios = usuarioService.listarTodosUsuarios();
@@ -60,21 +65,35 @@ public class UsuarioController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioResponseDTO> buscarUsuarioPorId(
-            @Parameter(description = "ID do usuário a ser buscado", required = true) @PathVariable UUID id) {
+            @Parameter(description = "ID do usuário a ser buscado", required = true, example = "3fa85f64-5717-4562-b3fc-2c963f66afa6") @PathVariable UUID id) {
         UsuarioResponseDTO usuario = usuarioService.buscarUsuarioPorId(id);
         return ResponseEntity.ok(usuario);
     }
 
-    // Adicione @Operation, @ApiResponses, @Parameter para os outros métodos também...
+    @Operation(summary = "Atualiza um usuário existente")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Usuário atualizado com sucesso",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = UsuarioResponseDTO.class)) }),
+            @ApiResponse(responseCode = "400", description = "Dados de entrada inválidos"),
+            @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
+    })
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(@Parameter(description = "ID do usuário a ser atualizado") @PathVariable UUID id,
-                                                               @Valid @RequestBody UsuarioRequestDTO usuarioRequestDTO) {
+    public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(
+            @Parameter(description = "ID do usuário a ser atualizado", required = true) @PathVariable UUID id,
+            @Valid @RequestBody UsuarioRequestDTO usuarioRequestDTO) {
         UsuarioResponseDTO usuarioAtualizado = usuarioService.atualizarUsuario(id, usuarioRequestDTO);
         return ResponseEntity.ok(usuarioAtualizado);
     }
 
+    @Operation(summary = "Deleta um usuário pelo ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Usuário deletado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
+    })
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarUsuario(@Parameter(description = "ID do usuário a ser deletado") @PathVariable UUID id) {
+    public ResponseEntity<Void> deletarUsuario(
+            @Parameter(description = "ID do usuário a ser deletado", required = true) @PathVariable UUID id) {
         usuarioService.deletarUsuario(id);
         return ResponseEntity.noContent().build();
     }
