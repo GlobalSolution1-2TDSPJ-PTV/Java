@@ -8,7 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, UUID> {
-    // Você pode adicionar métodos de consulta personalizados aqui, se necessário.
-    // Exemplo: Encontrar um usuário pelo email
-    Optional<Usuario> findByEmail(String email);
+
+    Usuario findUsuarioByEmail(String username);
 }
