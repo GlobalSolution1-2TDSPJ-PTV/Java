@@ -16,7 +16,9 @@ public class OpenApiConfig {
                         .title("FloodWatch API")
                         .version("v0.0.1")
                         .description("API para o sistema FloodWatch de prevenção e resposta a enchentes.")
-                        .license(new License().name("Apache 2.0").url("http://springdoc.org"))
+                        .license(new License()
+                                .name("Apache 2.0")
+                                .url("https://floodwatch/api/license"))
                 );
     }
 }
