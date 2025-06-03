@@ -1,6 +1,7 @@
 package com.global.FloodWatch.dto;
 
 import com.global.FloodWatch.model.Sos;
+import com.global.FloodWatch.model.TipoUsuario;
 import com.global.FloodWatch.model.Usuario;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -25,7 +26,7 @@ public class SosResponseDTO {
     @Schema(description = "Longitude da localização do pedido de SOS.")
     private Double longitude;
     @Schema(description = "Tipo do usuário que solicitou SOS.")
-    private Usuario.TipoUsuario tipoUsuario;
+    private TipoUsuario tipoUsuario;
     @Schema(description = "Status atual do pedido de SOS.")
     private Sos.StatusSos status;
     @Schema(description = "Data e hora de criação do pedido de SOS.")
