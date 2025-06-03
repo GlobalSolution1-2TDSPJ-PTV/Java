@@ -1,5 +1,6 @@
 package com.global.FloodWatch.dto;
 
+import com.global.FloodWatch.model.TipoUsuario;
 import com.global.FloodWatch.model.Usuario;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
@@ -34,7 +35,7 @@ public class UsuarioRequestDTO {
 
     @Schema(description = "Tipo de usuário.", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "O tipo de usuário não pode ser nulo")
-    private Usuario.TipoUsuario tipoUsuario;
+    private TipoUsuario tipoUsuario;
 
     @Schema(description = "Número de telefone do usuário.", example = "21998877665")
     @Size(max = 20, message = "O telefone deve ter no máximo 20 caracteres")

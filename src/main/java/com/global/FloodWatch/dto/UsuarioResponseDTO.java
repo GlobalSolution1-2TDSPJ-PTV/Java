@@ -1,5 +1,6 @@
 package com.global.FloodWatch.dto;
 
+import com.global.FloodWatch.model.TipoUsuario;
 import com.global.FloodWatch.model.Usuario;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -21,7 +22,7 @@ public class UsuarioResponseDTO {
     @Schema(description = "Endereço de e-mail do usuário.")
     private String email;
     @Schema(description = "Tipo de usuário.")
-    private Usuario.TipoUsuario tipoUsuario;
+    private TipoUsuario tipoUsuario;
     @Schema(description = "Número de telefone do usuário.")
     private String telefone;
     @Schema(description = "Latitude da localização do usuário.")
