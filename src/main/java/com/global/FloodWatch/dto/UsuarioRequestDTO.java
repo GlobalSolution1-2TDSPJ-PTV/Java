@@ -1,15 +1,14 @@
 package com.global.FloodWatch.dto;
 
 import com.global.FloodWatch.model.TipoUsuario;
-import com.global.FloodWatch.model.Usuario;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 
 
 @Data

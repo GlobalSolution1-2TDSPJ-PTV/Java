@@ -2,11 +2,10 @@ package com.global.FloodWatch.dto;
 
 import com.global.FloodWatch.model.Sos;
 import com.global.FloodWatch.model.TipoUsuario;
-import com.global.FloodWatch.model.Usuario;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
