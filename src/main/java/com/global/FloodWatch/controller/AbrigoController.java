@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
@@ -42,6 +43,7 @@ public class AbrigoController {
             @ApiResponse(responseCode = "400", description = "Dados de entrada inválidos")
     })
     @PostMapping
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<AbrigoResponseDTO> criarAbrigo(@Valid @RequestBody AbrigoRequestDTO abrigoRequestDTO) {
         AbrigoResponseDTO novoAbrigo = abrigoService.criarAbrigo(abrigoRequestDTO);
         return new ResponseEntity<>(novoAbrigo, HttpStatus.CREATED);
@@ -77,6 +79,7 @@ public class AbrigoController {
             @ApiResponse(responseCode = "404", description = "Abrigo não encontrado")
     })
     @PutMapping("/{id}")
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<AbrigoResponseDTO> atualizarAbrigo(
             @Parameter(description = "ID do abrigo a ser atualizado", required = true) @PathVariable UUID id,
             @Valid @RequestBody AbrigoRequestDTO abrigoRequestDTO) {
@@ -93,6 +96,7 @@ public class AbrigoController {
             @ApiResponse(responseCode = "404", description = "Abrigo não encontrado")
     })
     @PatchMapping("/{id}/ocupacao")
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<AbrigoResponseDTO> atualizarOcupacaoAbrigo(
             @Parameter(description = "ID do abrigo para atualizar a ocupação", required = true) @PathVariable UUID id,
             @Parameter(description = "Novo número de ocupantes", required = true, example = "80")
@@ -107,6 +111,7 @@ public class AbrigoController {
             @ApiResponse(responseCode = "404", description = "Abrigo não encontrado")
     })
     @DeleteMapping("/{id}")
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<Void> deletarAbrigo(
             @Parameter(description = "ID do abrigo a ser deletado", required = true) @PathVariable UUID id) {
         abrigoService.deletarAbrigo(id);

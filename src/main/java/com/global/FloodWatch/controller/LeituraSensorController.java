@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/leituras-sensor")
+@SecurityRequirement(name = "bearer-key")
 @Tag(name = "Leituras de Sensores", description = "APIs para gerenciamento de leituras de sensores")
 public class LeituraSensorController {
 

@@ -2,6 +2,7 @@ package com.global.FloodWatch.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -34,6 +35,66 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/swagger-ui.html"
                         ).permitAll()
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/auth/login",
+                                "/auth/refresh",
+                                "/api/usuarios",
+                                "/api/sos"
+                        ).permitAll()
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/abrigos/**",
+                                "/api/alertas/**",
+                                "/api/sos"
+                        ).permitAll()
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/api/abrigos/**"
+                        ).hasRole("ONG")
+                        .requestMatchers(
+                                HttpMethod.DELETE,
+                                "/api/abrigos/**"
+                        ).hasRole("ONG")
+                        .requestMatchers(
+                                HttpMethod.PATCH,
+                                "/api/abrigos/**",
+                                "/api/sos/**"
+                        ).hasRole("ONG")
+                        .requestMatchers(
+                                HttpMethod.PUT,
+                                "/api/abrigos/**"
+                        ).hasRole("ONG")
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/api/alertas/**",
+                                "/api/drones/**",
+                                "/api/leituras-sensor/**"
+                        ).hasRole("DEFESA_CIVIL")
+                        .requestMatchers(
+                                HttpMethod.DELETE,
+                                "/api/alertas/**",
+                                "/api/drones/**",
+                                "/api/leituras-sensor/**",
+                                "/api/sos/**"
+                        ).hasRole("DEFESA_CIVIL")
+                        .requestMatchers(
+                                HttpMethod.PATCH,
+                                "/api/alertas/**",
+                                "/api/drones/**",
+                                "/api/leituras-sensor/**"
+                        ).hasRole("DEFESA_CIVIL")
+                        .requestMatchers(
+                                HttpMethod.PUT,
+                                "/api/alertas/**",
+                                "/api/drones/**",
+                                "/api/leituras-sensor/**"
+                        ).hasRole("DEFESA_CIVIL")
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/drones/**",
+                                "/api/leituras-sensor/**"
+                        ).hasRole("DEFESA_CIVIL")
                         .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
