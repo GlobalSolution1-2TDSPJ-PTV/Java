@@ -4,7 +4,13 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -12,7 +18,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Table(name = "usuarios")
-public class Usuario {
+public class Usuario implements UserDetails {
 
     @Id
     @Column(columnDefinition = "RAW(16)")
@@ -40,13 +46,29 @@ public class Usuario {
 
     @PrePersist
     public void prePersist() {
-        if (this.id == null) { // Garante que o ID só seja gerado se não estiver definido (útil para updates)
+        if (this.id == null) {
             this.id = UUID.randomUUID();
         }
         this.criadoEm = LocalDateTime.now();
     }
 
-    public enum TipoUsuario {
-        comum, defesa_civil, ong
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(tipoUsuario == TipoUsuario.DEFESA_CIVIL) {
+            return List.of(new SimpleGrantedAuthority("ROLE_DEFESA_CIVIL"), new SimpleGrantedAuthority("ROLE_COMUM"), new SimpleGrantedAuthority("ROLE_ONG"));
+        } else if(tipoUsuario == TipoUsuario.ONG) {
+            return List.of(new SimpleGrantedAuthority("ROLE_ONG"), new SimpleGrantedAuthority("ROLE_COMUM"));
+        }
+        return List.of(new SimpleGrantedAuthority("ROLE_COMUM"));
+    }
+
+    @Override
+    public String getPassword() {
+        return senhaHash;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
     }
 }

@@ -1,27 +1,27 @@
 package com.global.FloodWatch.dto;
 
 
-import com.global.FloodWatch.model.Usuario; // Importe o Enum
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(description = "DTO para requisição de criação de um pedido de SOS")
 public class SosRequestDTO {
+    @Schema(description = "ID do usuário que está solicitando SOS.", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "O ID do usuário não pode ser nulo")
-    private UUID usuarioId; // Apenas o ID para criar a associação
+    private UUID usuarioId;
 
+    @Schema(description = "Latitude da localização do pedido de SOS.", example = "-22.90278", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "A latitude não pode ser nula")
     private Double latitude;
 
+    @Schema(description = "Longitude da localização do pedido de SOS.", example = "-43.2075", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "A longitude não pode ser nula")
     private Double longitude;
 }

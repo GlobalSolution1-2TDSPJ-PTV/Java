@@ -1,5 +1,6 @@
 package com.global.FloodWatch.service;
 
+import com.global.FloodWatch.config.security.TokenService;
 import com.global.FloodWatch.dto.UsuarioRequestDTO;
 import com.global.FloodWatch.dto.UsuarioResponseDTO;
 import com.global.FloodWatch.exception.ResourceNotFoundException;
@@ -19,12 +20,14 @@ import java.util.stream.Collectors;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
-    private final PasswordEncoder passwordEncoder; // Injete o PasswordEncoder
+    private final PasswordEncoder passwordEncoder;
+    private final TokenService tokenService;
 
     @Autowired
-    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
+    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder, TokenService tokenService) {
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
+        this.tokenService = tokenService;
     }
 
     @Transactional
@@ -32,15 +35,13 @@ public class UsuarioService {
         Usuario usuario = new Usuario();
         usuario.setNome(usuarioRequestDTO.getNome());
         usuario.setEmail(usuarioRequestDTO.getEmail());
-        // Faça o hash da senha antes de salvar
         usuario.setSenhaHash(passwordEncoder.encode(usuarioRequestDTO.getSenha()));
         usuario.setTipoUsuario(usuarioRequestDTO.getTipoUsuario());
         usuario.setTelefone(usuarioRequestDTO.getTelefone());
         usuario.setLatitude(usuarioRequestDTO.getLatitude());
         usuario.setLongitude(usuarioRequestDTO.getLongitude());
-        // O @PrePersist na entidade Usuario cuidará do ID e criadoEm
-
         Usuario novoUsuario = usuarioRepository.save(usuario);
+        this.tokenService.generateToken(novoUsuario);
         return mapToUsuarioResponseDTO(novoUsuario);
     }
 
