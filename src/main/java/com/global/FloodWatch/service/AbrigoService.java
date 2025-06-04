@@ -28,8 +28,7 @@ public class AbrigoService {
         Abrigo abrigo = new Abrigo();
         abrigo.setNome(abrigoRequestDTO.getNome());
         abrigo.setCapacidade(abrigoRequestDTO.getCapacidade());
-        // O @PrePersist na entidade Abrigo cuidará do ID e ocupacaoAtual inicial
-        if (abrigoRequestDTO.getOcupacaoAtual() != null) { // Permite definir ocupação inicial se fornecida
+        if (abrigoRequestDTO.getOcupacaoAtual() != null) {
             abrigo.setOcupacaoAtual(abrigoRequestDTO.getOcupacaoAtual());
         }
         abrigo.setLatitude(abrigoRequestDTO.getLatitude());
