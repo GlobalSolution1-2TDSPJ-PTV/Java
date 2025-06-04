@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,7 @@ public class UsuarioController {
                             schema = @Schema(implementation = UsuarioResponseDTO.class)) }) // Correto, mas pode ser um array
     })
     @GetMapping
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<List<UsuarioResponseDTO>> listarTodosUsuarios() {
         List<UsuarioResponseDTO> usuarios = usuarioService.listarTodosUsuarios();
         return ResponseEntity.ok(usuarios);
@@ -64,6 +66,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
     })
     @GetMapping("/{id}")
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<UsuarioResponseDTO> buscarUsuarioPorId(
             @Parameter(description = "ID do usuário a ser buscado", required = true, example = "3fa85f64-5717-4562-b3fc-2c963f66afa6") @PathVariable UUID id) {
         UsuarioResponseDTO usuario = usuarioService.buscarUsuarioPorId(id);
@@ -79,6 +82,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
     })
     @PutMapping("/{id}")
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(
             @Parameter(description = "ID do usuário a ser atualizado", required = true) @PathVariable UUID id,
             @Valid @RequestBody UsuarioRequestDTO usuarioRequestDTO) {
@@ -92,6 +96,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
     })
     @DeleteMapping("/{id}")
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<Void> deletarUsuario(
             @Parameter(description = "ID do usuário a ser deletado", required = true) @PathVariable UUID id) {
         usuarioService.deletarUsuario(id);

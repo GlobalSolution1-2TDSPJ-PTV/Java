@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,7 @@ public class AlertaController {
             @ApiResponse(responseCode = "404", description = "Sensor associado não encontrado")
     })
     @PostMapping
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<AlertaResponseDTO> criarAlerta(@Valid @RequestBody AlertaRequestDTO alertaRequestDTO) {
         AlertaResponseDTO novoAlerta = alertaService.criarAlerta(alertaRequestDTO);
         return new ResponseEntity<>(novoAlerta, HttpStatus.CREATED);
@@ -88,6 +90,7 @@ public class AlertaController {
             @ApiResponse(responseCode = "404", description = "Alerta não encontrado")
     })
     @PatchMapping("/{id}/resolver")
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<AlertaResponseDTO> atualizarStatusResolvidoAlerta(
             @Parameter(description = "ID do alerta a ser atualizado", required = true) @PathVariable UUID id,
             @Valid @RequestBody AlertaResolvidoUpdateRequestDTO resolvidoUpdateRequestDTO) {
@@ -101,6 +104,7 @@ public class AlertaController {
             @ApiResponse(responseCode = "404", description = "Alerta não encontrado")
     })
     @DeleteMapping("/{id}")
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<Void> deletarAlerta(
             @Parameter(description = "ID do alerta a ser deletado", required = true) @PathVariable UUID id) {
         alertaService.deletarAlerta(id);

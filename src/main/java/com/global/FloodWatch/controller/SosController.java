@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,7 @@ public class SosController {
             @ApiResponse(responseCode = "404", description = "Pedido de SOS não encontrado")
     })
     @GetMapping("/{id}")
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<SosResponseDTO> buscarSosPorId(
             @Parameter(description = "ID do pedido de SOS", required = true) @PathVariable UUID id) {
         SosResponseDTO sos = sosService.buscarSosPorId(id);
@@ -73,6 +75,7 @@ public class SosController {
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
     })
     @GetMapping("/usuario/{usuarioId}")
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<List<SosResponseDTO>> listarSosPorUsuario(
             @Parameter(description = "ID do usuário para buscar seus pedidos de SOS", required = true) @PathVariable UUID usuarioId) {
         List<SosResponseDTO> listaSos = sosService.listarSosPorUsuario(usuarioId);
@@ -88,6 +91,7 @@ public class SosController {
             @ApiResponse(responseCode = "404", description = "Pedido de SOS não encontrado")
     })
     @PatchMapping("/{id}/status")
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<SosResponseDTO> atualizarStatusSos(
             @Parameter(description = "ID do pedido de SOS a ser atualizado", required = true) @PathVariable UUID id,
             @Valid @RequestBody SosStatusUpdateRequestDTO statusUpdateRequestDTO) {
@@ -101,6 +105,7 @@ public class SosController {
             @ApiResponse(responseCode = "404", description = "Pedido de SOS não encontrado")
     })
     @DeleteMapping("/{id}")
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<Void> deletarSos(
             @Parameter(description = "ID do pedido de SOS a ser deletado", required = true) @PathVariable UUID id) {
         sosService.deletarSos(id);

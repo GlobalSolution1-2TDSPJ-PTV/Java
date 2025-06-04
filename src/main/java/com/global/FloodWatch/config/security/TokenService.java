@@ -22,7 +22,7 @@ public class TokenService {
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + dataExpiration()))
+                .setExpiration(new Date(System.currentTimeMillis() + dateExpiration()))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -46,7 +46,7 @@ public class TokenService {
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + dataExpiration()))
+                .setExpiration(new Date(System.currentTimeMillis() + dateExpirationRefresh()))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -55,8 +55,12 @@ public class TokenService {
         return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
-    public int dataExpiration() {
+    private int dateExpiration() {
         return LocalDateTime.now().plusDays(2).getSecond() * 1000;
+    }
+
+    private int dateExpirationRefresh() {
+        return LocalDateTime.now().plusDays(7).getSecond() * 1000;
     }
 
 }
