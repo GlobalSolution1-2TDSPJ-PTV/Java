@@ -21,13 +21,11 @@ public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
-    private final TokenService tokenService;
 
     @Autowired
-    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder, TokenService tokenService) {
+    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
-        this.tokenService = tokenService;
     }
 
     @Transactional
@@ -41,7 +39,6 @@ public class UsuarioService {
         usuario.setLatitude(usuarioRequestDTO.getLatitude());
         usuario.setLongitude(usuarioRequestDTO.getLongitude());
         Usuario novoUsuario = usuarioRepository.save(usuario);
-        this.tokenService.generateToken(novoUsuario);
         return mapToUsuarioResponseDTO(novoUsuario);
     }
 
