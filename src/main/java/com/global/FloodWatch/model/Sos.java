@@ -19,7 +19,7 @@ public class Sos {
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuario_id", nullable = false)
+    @JoinColumn(name = "usuario_id", nullable = true)
     private Usuario usuario;
 
     private Double latitude;
@@ -41,9 +41,5 @@ public class Sos {
         if (this.status == null) {
             this.status = StatusSos.pendente;
         }
-    }
-
-    public enum StatusSos {
-        pendente, em_atendimento, resolvido
     }
 }

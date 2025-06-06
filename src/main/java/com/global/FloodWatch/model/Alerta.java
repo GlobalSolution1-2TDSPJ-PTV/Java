@@ -52,8 +52,4 @@ public class Alerta {
             this.resolvido = "N"; // Padrão para não resolvido
         }
     }
-
-    public enum NivelAlerta {
-        baixo, moderado, critico
-    }
 }

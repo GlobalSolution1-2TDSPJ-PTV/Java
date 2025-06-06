@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Service
@@ -55,12 +54,13 @@ public class TokenService {
         return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
-    private int dateExpiration() {
-        return LocalDateTime.now().plusDays(2).getSecond() * 1000;
+    private long dateExpiration() {
+        return java.time.Duration.ofDays(2).toMillis();
     }
 
-    private int dateExpirationRefresh() {
-        return LocalDateTime.now().plusDays(7).getSecond() * 1000;
+    private long dateExpirationRefresh() {
+        return java.time.Duration.ofDays(7).toMillis();
     }
+
 
 }

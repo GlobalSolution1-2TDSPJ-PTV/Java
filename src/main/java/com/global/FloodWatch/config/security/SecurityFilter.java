@@ -33,7 +33,7 @@ public class SecurityFilter extends OncePerRequestFilter {
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = this.authorizationService.loadUserByUsername(username);
 
-                if (tokenService.isTokenValid(username, userDetails)) {
+                if (tokenService.isTokenValid(token, userDetails)) {
                     UsernamePasswordAuthenticationToken authToken =
                             new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
