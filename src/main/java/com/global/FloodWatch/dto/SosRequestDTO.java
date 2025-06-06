@@ -13,9 +13,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Schema(description = "DTO para requisição de criação de um pedido de SOS")
 public class SosRequestDTO {
-    @Schema(description = "ID do usuário que está solicitando SOS.", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotNull(message = "O ID do usuário não pode ser nulo")
-    private UUID usuarioId;
 
     @Schema(description = "Latitude da localização do pedido de SOS.", example = "-22.90278", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "A latitude não pode ser nula")

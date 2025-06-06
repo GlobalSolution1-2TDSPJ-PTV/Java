@@ -29,15 +29,14 @@ public class SosService {
     }
 
     @Transactional
-    public SosResponseDTO criarSos(SosRequestDTO sosRequestDTO) {
-        Usuario usuario = usuarioService.buscarEntidadeUsuarioPorId(sosRequestDTO.getUsuarioId());
-
+    public SosResponseDTO criarSos(SosRequestDTO sosRequestDTO, String email) {
         Sos sos = new Sos();
-        sos.setUsuario(usuario);
+        if(email != null){
+            Usuario usuario = usuarioService.buscarEntidadeUsuarioEmail(email);
+            sos.setUsuario(usuario);
+        }
         sos.setLatitude(sosRequestDTO.getLatitude());
         sos.setLongitude(sosRequestDTO.getLongitude());
-        // O @PrePersist na entidade Sos cuidará do ID, criadoEm e status inicial
-
         Sos novoSos = sosRepository.save(sos);
         return mapToSosResponseDTO(novoSos);
     }
@@ -81,15 +80,26 @@ public class SosService {
                 .collect(Collectors.toList());
     }
 
+    public List<SosResponseDTO> buscarSosPorEmail(String email) {
+        Usuario usuario = usuarioService.buscarEntidadeUsuarioEmail(email);
+
+        List<Sos> sosList = sosRepository.findByUsuario(usuario);
+
+        return sosList.stream()
+                .map(this::mapToSosResponseDTO)
+                .toList();
+    }
+
+
 
     private SosResponseDTO mapToSosResponseDTO(Sos sos) {
         return new SosResponseDTO(
                 sos.getId(),
-                sos.getUsuario().getId(),
-                sos.getUsuario().getNome(),
+                sos.getUsuario() != null ? sos.getUsuario().getId() : null,
+                sos.getUsuario() != null ? sos.getUsuario().getNome() : null,
                 sos.getLatitude(),
                 sos.getLongitude(),
-                sos.getUsuario().getTipoUsuario(),
+                sos.getUsuario() != null ? sos.getUsuario().getTipoUsuario() : null,
                 sos.getStatus(),
                 sos.getCriadoEm()
         );

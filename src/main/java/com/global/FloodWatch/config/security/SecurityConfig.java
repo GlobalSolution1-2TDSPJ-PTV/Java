@@ -49,6 +49,10 @@ public class SecurityConfig {
                                 "/api/sos"
                         ).permitAll()
                         .requestMatchers(
+                                HttpMethod.DELETE,
+                                "/api/sos/**"
+                        ).permitAll()
+                        .requestMatchers(
                                 HttpMethod.POST,
                                 "/api/abrigos/**"
                         ).hasRole("ONG")
@@ -75,8 +79,7 @@ public class SecurityConfig {
                                 HttpMethod.DELETE,
                                 "/api/alertas/**",
                                 "/api/drones/**",
-                                "/api/leituras-sensor/**",
-                                "/api/sos/**"
+                                "/api/leituras-sensor/**"
                         ).hasRole("DEFESA_CIVIL")
                         .requestMatchers(
                                 HttpMethod.PATCH,

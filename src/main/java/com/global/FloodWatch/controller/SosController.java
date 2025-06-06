@@ -16,6 +16,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,8 +43,14 @@ public class SosController {
             @ApiResponse(responseCode = "404", description = "Usuário associado não encontrado")
     })
     @PostMapping
-    public ResponseEntity<SosResponseDTO> criarSos(@Valid @RequestBody SosRequestDTO sosRequestDTO) {
-        SosResponseDTO novoSos = sosService.criarSos(sosRequestDTO);
+    public ResponseEntity<SosResponseDTO> criarSos(@Valid @RequestBody SosRequestDTO sosRequestDTO, Authentication authentication) {
+        String email;
+        if(authentication == null){
+            email = null;
+        } else {
+            email = authentication.getName();
+        }
+        SosResponseDTO novoSos = sosService.criarSos(sosRequestDTO, email);
         return new ResponseEntity<>(novoSos, HttpStatus.CREATED);
     }
 
@@ -67,6 +74,15 @@ public class SosController {
             @Parameter(description = "ID do pedido de SOS", required = true) @PathVariable UUID id) {
         SosResponseDTO sos = sosService.buscarSosPorId(id);
         return ResponseEntity.ok(sos);
+    }
+
+    @GetMapping("/usuario")
+    @SecurityRequirement(name = "bearer-key")
+    public ResponseEntity<List<SosResponseDTO>> buscarSosDoUsuario(Authentication authentication) {
+        String email = authentication.getName();
+
+        List<SosResponseDTO> sosList = sosService.buscarSosPorEmail(email);
+        return ResponseEntity.ok(sosList);
     }
 
     @Operation(summary = "Lista pedidos de SOS por ID do usuário")

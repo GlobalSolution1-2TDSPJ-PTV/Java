@@ -1,16 +1,15 @@
 package com.global.FloodWatch.service;
 
-import com.global.FloodWatch.config.security.TokenService;
 import com.global.FloodWatch.dto.UsuarioRequestDTO;
 import com.global.FloodWatch.dto.UsuarioResponseDTO;
 import com.global.FloodWatch.exception.ResourceNotFoundException;
 import com.global.FloodWatch.model.Usuario;
 import com.global.FloodWatch.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 import java.util.List;
 import java.util.UUID;
@@ -62,6 +61,14 @@ public class UsuarioService {
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado com o ID: " + id));
     }
 
+    @Transactional(readOnly = true)
+    public Usuario buscarEntidadeUsuarioEmail(String email) {
+        Usuario usuario = usuarioRepository.findUsuarioByEmail(email);
+        if (usuario == null) {
+            throw new ResourceNotFoundException("Usuário não encontrado com o email: " + email);
+        }
+        return usuario;
+    }
 
     @Transactional
     public UsuarioResponseDTO atualizarUsuario(UUID id, UsuarioRequestDTO usuarioRequestDTO) {
@@ -81,6 +88,15 @@ public class UsuarioService {
         Usuario usuarioAtualizado = usuarioRepository.save(usuario);
         return mapToUsuarioResponseDTO(usuarioAtualizado);
     }
+    @Transactional
+    public void atualizarSenha(String email, String novaSenha) {
+        Usuario usuario = usuarioRepository.findUsuarioByEmail(email);
+        String senhaCriptografada = new BCryptPasswordEncoder().encode(novaSenha);
+        usuario.setSenhaHash(senhaCriptografada);
+        usuarioRepository.save(usuario);
+    }
+
+
 
     @Transactional
     public void deletarUsuario(UUID id) {

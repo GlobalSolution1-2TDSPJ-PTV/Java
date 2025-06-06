@@ -1,5 +1,6 @@
 package com.global.FloodWatch.controller;
 
+import com.global.FloodWatch.dto.AlterarSenhaDTO;
 import com.global.FloodWatch.dto.UsuarioRequestDTO;
 import com.global.FloodWatch.dto.UsuarioResponseDTO;
 import com.global.FloodWatch.service.UsuarioService;
@@ -15,6 +16,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -89,6 +91,27 @@ public class UsuarioController {
         UsuarioResponseDTO usuarioAtualizado = usuarioService.atualizarUsuario(id, usuarioRequestDTO);
         return ResponseEntity.ok(usuarioAtualizado);
     }
+
+    @Operation(summary = "Atualiza a senha do usuário autenticado")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Senha atualizada com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Dados de entrada inválidos"),
+            @ApiResponse(responseCode = "401", description = "Não autorizado - Token inválido ou ausente"),
+            @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
+    })
+    @PatchMapping("/senha")
+    @SecurityRequirement(name = "bearer-key")
+    public ResponseEntity<Void> atualizarSenhaUsuarioAutenticado(
+            @Valid @RequestBody AlterarSenhaDTO dto,
+            Authentication authentication) {
+
+        String email = authentication.getName();
+        usuarioService.atualizarSenha(email, dto.novaSenha());
+
+        return ResponseEntity.ok().build();
+    }
+
+
 
     @Operation(summary = "Deleta um usuário pelo ID")
     @ApiResponses(value = {
