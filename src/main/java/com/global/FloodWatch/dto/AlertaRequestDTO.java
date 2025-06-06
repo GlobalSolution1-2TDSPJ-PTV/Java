@@ -1,6 +1,7 @@
 package com.global.FloodWatch.dto;
 
 import com.global.FloodWatch.model.Alerta;
+import com.global.FloodWatch.model.NivelAlerta;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -31,5 +32,5 @@ public class AlertaRequestDTO {
 
     @Schema(description = "Nível de severidade do alerta.", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "O nível do alerta não pode ser nulo")
-    private Alerta.NivelAlerta nivel;
+    private NivelAlerta nivel;
 }

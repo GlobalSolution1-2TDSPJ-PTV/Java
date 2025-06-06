@@ -1,6 +1,6 @@
 package com.global.FloodWatch.dto;
 
-import com.global.FloodWatch.model.Sos;
+import com.global.FloodWatch.model.StatusSos;
 import com.global.FloodWatch.model.TipoUsuario;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -27,7 +27,7 @@ public class SosResponseDTO {
     @Schema(description = "Tipo do usuário que solicitou SOS.")
     private TipoUsuario tipoUsuario;
     @Schema(description = "Status atual do pedido de SOS.")
-    private Sos.StatusSos status;
+    private StatusSos status;
     @Schema(description = "Data e hora de criação do pedido de SOS.")
     private LocalDateTime criadoEm;
 }
