@@ -1,6 +1,7 @@
 package com.global.FloodWatch.dto;
 
 import com.global.FloodWatch.model.Alerta;
+import com.global.FloodWatch.model.NivelAlerta;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,7 @@ public class AlertaResponseDTO {
     @Schema(description = "Mensagem detalhada do alerta.")
     private String mensagem;
     @Schema(description = "Nível de severidade do alerta.")
-    private Alerta.NivelAlerta nivel;
+    private NivelAlerta nivel;
     @Schema(description = "Data e hora de criação do alerta.")
     private LocalDateTime criadoEm;
     @Schema(description = "Status de resolução do alerta ('S' para resolvido, 'N' para não resolvido).")
