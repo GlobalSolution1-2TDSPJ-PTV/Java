@@ -60,7 +60,7 @@ public class AbrigoController {
 
 
     @Operation(summary = "Lista todos os abrigos com paginação e ordenação")
-    @GetMapping
+    @GetMapping("/paginated")
     public ResponseEntity<Page<AbrigoResponseDTO>> listarTodosAbrigos(
             @Parameter(description = "Informações de paginação e ordenação (ex: page=0&size=10&sort=nome,asc)")
             Pageable pageable) {
