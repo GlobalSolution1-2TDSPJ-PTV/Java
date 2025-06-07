@@ -6,6 +6,8 @@ import com.global.FloodWatch.exception.ResourceNotFoundException;
 import com.global.FloodWatch.model.Abrigo;
 import com.global.FloodWatch.repository.AbrigoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,6 +47,13 @@ public class AbrigoService {
         return abrigoRepository.findAll().stream()
                 .map(this::mapToAbrigoResponseDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public Page<AbrigoResponseDTO> listarTodosAbrigos(Pageable pageable) {
+        return abrigoRepository.findAll(pageable)
+                .map(this::mapToAbrigoResponseDTO);
+
     }
 
     @Transactional(readOnly = true)

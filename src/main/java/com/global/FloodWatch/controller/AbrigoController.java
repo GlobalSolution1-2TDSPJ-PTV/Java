@@ -14,6 +14,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -55,6 +57,18 @@ public class AbrigoController {
         List<AbrigoResponseDTO> abrigos = abrigoService.listarTodosAbrigos();
         return ResponseEntity.ok(abrigos);
     }
+
+
+    @Operation(summary = "Lista todos os abrigos com paginação e ordenação")
+    @GetMapping
+    public ResponseEntity<Page<AbrigoResponseDTO>> listarTodosAbrigos(
+            @Parameter(description = "Informações de paginação e ordenação (ex: page=0&size=10&sort=nome,asc)")
+            Pageable pageable) {
+
+        Page<AbrigoResponseDTO> abrigos = abrigoService.listarTodosAbrigos(pageable);
+        return ResponseEntity.ok(abrigos);
+    }
+
 
     @Operation(summary = "Busca um abrigo pelo ID")
     @ApiResponses(value = {
