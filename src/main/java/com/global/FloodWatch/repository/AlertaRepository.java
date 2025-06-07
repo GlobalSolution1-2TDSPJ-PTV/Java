@@ -3,7 +3,6 @@ package com.global.FloodWatch.repository;
 import com.global.FloodWatch.model.Alerta;
 import com.global.FloodWatch.model.NivelAlerta;
 import com.global.FloodWatch.model.Sensor;
-import com.global.FloodWatch.model.Alerta.NivelAlerta;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.UUID;
