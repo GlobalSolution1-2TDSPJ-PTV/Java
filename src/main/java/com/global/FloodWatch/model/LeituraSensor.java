@@ -15,7 +15,7 @@ import java.util.UUID;
 public class LeituraSensor {
 
     @Id
-    @Column(columnDefinition = "RAW(16)")
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -29,11 +29,4 @@ public class LeituraSensor {
     @Column(name = "lido_em")
     private LocalDateTime lidoEm;
 
-    @PrePersist
-    public void prePersist() {
-        if (this.id == null) {
-            this.id = UUID.randomUUID();
-        }
-        this.lidoEm = LocalDateTime.now();
-    }
 }

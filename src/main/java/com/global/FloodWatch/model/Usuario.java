@@ -21,7 +21,7 @@ import java.util.UUID;
 public class Usuario implements UserDetails {
 
     @Id
-    @Column(columnDefinition = "RAW(16)")
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     private String nome;
@@ -43,14 +43,6 @@ public class Usuario implements UserDetails {
 
     @Column(name = "criado_em")
     private LocalDateTime criadoEm;
-
-    @PrePersist
-    public void prePersist() {
-        if (this.id == null) {
-            this.id = UUID.randomUUID();
-        }
-        this.criadoEm = LocalDateTime.now();
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

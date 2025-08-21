@@ -14,7 +14,7 @@ import java.util.UUID;
 public class Abrigo {
 
     @Id
-    @Column(columnDefinition = "RAW(16)")
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     private String nome;
@@ -29,13 +29,4 @@ public class Abrigo {
 
     private String responsavel;
 
-    @PrePersist
-    public void prePersist() {
-        if (this.id == null) {
-            this.id = UUID.randomUUID();
-        }
-        if (this.ocupacaoAtual == null) {
-            this.ocupacaoAtual = 0;
-        }
-    }
 }

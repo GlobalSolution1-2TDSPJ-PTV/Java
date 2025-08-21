@@ -18,7 +18,7 @@ import java.util.UUID;
 public class Alerta {
 
     @Id
-    @Column(columnDefinition = "RAW(16)")
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -42,14 +42,4 @@ public class Alerta {
     @Column(length = 1, nullable = false)
     private String resolvido; // 'S' ou 'N'
 
-    @PrePersist
-    public void prePersist() {
-        if (this.id == null) {
-            this.id = UUID.randomUUID();
-        }
-        this.criadoEm = LocalDateTime.now();
-        if (this.resolvido == null) {
-            this.resolvido = "N"; // Padrão para não resolvido
-        }
-    }
 }

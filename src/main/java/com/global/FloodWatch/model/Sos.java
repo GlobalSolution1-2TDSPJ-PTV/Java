@@ -15,7 +15,7 @@ import java.util.UUID;
 public class Sos {
 
     @Id
-    @Column(columnDefinition = "RAW(16)")
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -32,14 +32,4 @@ public class Sos {
     @Column(name = "criado_em")
     private LocalDateTime criadoEm;
 
-    @PrePersist
-    public void prePersist() {
-        if (this.id == null) {
-            this.id = UUID.randomUUID();
-        }
-        this.criadoEm = LocalDateTime.now();
-        if (this.status == null) {
-            this.status = StatusSos.pendente;
-        }
-    }
 }

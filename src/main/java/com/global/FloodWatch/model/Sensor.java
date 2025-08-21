@@ -21,7 +21,7 @@ import java.util.UUID;
 public class Sensor {
 
     @Id
-    @Column(columnDefinition = "RAW(16)")
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     private String localizacao;
@@ -47,14 +47,6 @@ public class Sensor {
     @EqualsAndHashCode.Exclude
     private List<Alerta> alertas = new ArrayList<>();
 
-
-    @PrePersist
-    public void prePersist() {
-        if (this.id == null) {
-            this.id = UUID.randomUUID();
-        }
-        this.instaladoEm = LocalDateTime.now();
-    }
 
     public void addLeitura(LeituraSensor leitura) {
         leituras.add(leitura);

@@ -14,7 +14,7 @@ import java.util.UUID;
 public class Drone {
 
     @Id
-    @Column(columnDefinition = "RAW(16)")
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     private String nome;
@@ -29,15 +29,6 @@ public class Drone {
     private Double latitude;
     private Double longitude;
 
-    @PrePersist
-    public void prePersist() {
-        if (this.id == null) {
-            this.id = UUID.randomUUID();
-        }
-        if (this.status == null) {
-            this.status = StatusDrone.ativo;
-        }
-    }
 
     public enum StatusDrone {
         ativo, em_missao, offline
